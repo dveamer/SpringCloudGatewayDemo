@@ -1,0 +1,31 @@
+
+spring:
+  cloud:
+    gateway:
+      default-filters:
+      - name: Hystrix
+        args:
+          name: fallbackcmd
+          fallbackUri: forward:/fallback
+      - name: Retry
+        args:
+          retries: 3
+          series: # empty
+          methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          exceptions:
+          - java.net.ConnectException
+
+hystrix:
+  command:
+    default:
+      execution.isolation.thread.timeoutInMilliseconds: 100000
+      circuitBreaker:
+        errorThresholdPercentage: 1
+        requestVolumeThreshold: 1
+        sleepWindowInMilliseconds: 10000
+      metrics.rollingStats.timeInMilliseconds: 10000
+

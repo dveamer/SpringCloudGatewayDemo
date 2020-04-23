@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: service-a
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+logging:
+  level:
+    root: WARN
+    com.dveamer.service: DEBUG

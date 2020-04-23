@@ -1,0 +1,32 @@
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  level:
+    root: WARN
+    reactor.netty.http.server.AccessLog: INFO
+
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    kubernetes:
+      enabled: false
+      ribbon:
+        mode: POD
+    gateway:
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 1000ms
+      routes:
+        - id: service
+          uri: lb://service-a
+          predicates:
+            - Path=/**

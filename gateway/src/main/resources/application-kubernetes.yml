@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    kubernetes:
+      enabled: true
+      ribbon:
+        mode: POD
+    gateway:
+      default-filters:
+        - CircuitBreaker=myCircuitBreaker
+        - name: Retry
+          args:
+            retries: 3
+            series: # empty
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            exceptions:
+              - java.net.ConnectException
+
