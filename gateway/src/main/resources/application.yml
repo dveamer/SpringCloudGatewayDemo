@@ -10,6 +10,7 @@ management:
 logging:
   level:
     root: WARN
+    com.dveamer.gateway: DEBUG
     reactor.netty.http.server.AccessLog: INFO
 
 
@@ -17,10 +18,11 @@ spring:
   application:
     name: gateway
   cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
     kubernetes:
       enabled: false
-      ribbon:
-        mode: POD
     gateway:
       httpclient:
         connect-timeout: 1000
